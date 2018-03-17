@@ -5,16 +5,18 @@
 #include <iostream>
 using namespace std;
 
-int recursiveLCS(string x, string y, int i, int j){
+int memRecursiveLCS(string x, string y, int i, int j, int** mem_table){
 
-	if(i <= 0 || j <= 0){
-		return 0;
-	}else if(x[i] == y[j]){
-		return recursiveLCS(x, y, i-1, j-1) + 1;
-	}else{
-		cout << "in recursive" << endl;
-		return max( recursiveLCS(x, y, i-1, j), recursiveLCS(x, y, i, j-1) );
+	if(mem_table[i][j] == -1){
+		if(i == 0 || j == 0){
+			mem_table[i][j] = 0;
+		}else if(x[i] == y[j]){
+			mem_table[i][j] = memRecursiveLCS(x, y, i-1, j-1, mem_table) + 1;
+		}else{
+			mem_table[i][j] =  max( memRecursiveLCS(x, y, i-1, j, mem_table), memRecursiveLCS(x, y, i, j-1, mem_table) );
+		}
 	}
+	return mem_table[i][j];
 }
 
 int main(int argc, char *argv[]){
@@ -48,8 +50,31 @@ int main(int argc, char *argv[]){
 	fp_x.close();
 	fp_y.close();
 	
+	//int **mem_table;
+	//int mem_table = new int *[str1.size()+1];
+	int str1_size = str1.size()+1;
+	int str2_size = str2.size()+1;
+	
+	int ** mem_table;
+	mem_table = new int*[str1_size];
+	
 	clock_t beg_time = clock();
-	int LCSlen = recursiveLCS(str1, str2, str1.size(), str2.size());
+	
+	for(int i = 0; i < str1_size; i++){
+		mem_table[i] = new int[str2_size];
+	}
+
+	for(int i = 0; i < str1.size()+1; i++){
+		for(int j = 0; j < str2.size()+1; j++){
+			if(i == 0 || j == 0){
+				mem_table[i][j] = 0;
+			}else{
+				mem_table[i][j] = -1;
+			}
+		}
+	}
+
+	int LCSlen = memRecursiveLCS(str1, str2, str1.size(), str2.size(), mem_table);
 	clock_t end_time = clock();
 	fp_o << LCSlen << endl;
 	fp_o << float(end_time-beg_time)/CLOCKS_PER_SEC << endl;
@@ -58,3 +83,4 @@ int main(int argc, char *argv[]){
 
 	return 0;
 }
+

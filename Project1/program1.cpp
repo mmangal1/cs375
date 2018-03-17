@@ -39,10 +39,8 @@ int main(int argc, char *argv[]){
 	}
 
 	fp_x >> str1; //stores the contents from filex into str1
-//	cout << "Printing contents of filex.txt " << str1 << endl;
 	
 	fp_y >> str2; //stores the contents from filey into str2
-//	cout << "Printing contents of filey.txt " << str2 << endl;
 
 	fp_x.close();
 	fp_y.close();
@@ -53,8 +51,8 @@ int main(int argc, char *argv[]){
 	//create table for storing values and directions
 	elements table[rows][cols];
 
-	clock_t beg_time = clock();
 
+	clock_t beg_time = clock();
 	//initialize table to all 0 and no arrow
 	for(int i = 0; i < rows; i++){
 		for(int j = 0; j < cols; j++){
@@ -90,16 +88,6 @@ int main(int argc, char *argv[]){
 			}
 			fp_o << endl;
 		}
-	// printing arrows
-	/*
-		fp_o << endl;
-		for(int i = 0; i < rows; i++){
-			for(int j = 0; j < cols; j++){
-				fp_o << table[i][j].arrow << " ";
-			}
-			fp_o << endl;
-		}
-	*/
 		//find the LCS of the problem
 		int i_row = rows-1;
 		int j_col = cols-1;

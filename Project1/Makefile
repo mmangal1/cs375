@@ -12,6 +12,7 @@ program3: program3.cpp
 
 clean:
 	rm $(PRJ)
+	rm *.txt
 
 run:
 	./$(PRJ)
