@@ -12,7 +12,6 @@ int recursiveLCS(string x, string y, int i, int j){
 	}else if(x[i] == y[j]){
 		return recursiveLCS(x, y, i-1, j-1) + 1;
 	}else{
-		cout << "in recursive" << endl;
 		return max( recursiveLCS(x, y, i-1, j), recursiveLCS(x, y, i, j-1) );
 	}
 }
